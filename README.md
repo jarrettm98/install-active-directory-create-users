@@ -106,6 +106,77 @@ After Installing the VM will reboot. Once it is rebooted, Log back into the Doma
 
 ![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/5e8736c2-dda9-4ec4-8bfc-a954bc34cce9)
 
-Once logged in, using Server Manager click on tools in the top-right corner. Next click on "Active Directory Users and Computers".
+<h2>Step 3: Creating a Domain Admin</h2>
+
+Once logged in, using Server Manager click on tools in the top-right corner. Next click on "Active Directory Users and Computers."
 
 ![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/8fe68c25-2b8d-44de-9ebe-4fbc4ff1df84)
+
+In the Domain container, create a new "Organizational Unit"
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/1be88741-a3df-40d2-81ca-53c2ae0bb518)
+
+Name the OU "_EMPLOYEES", then click OK. Next create another OU and name it "_ADMINS."
+
+In the "_EMPLOYEES" tab, create a new "User"
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/eb70e5e0-0729-4ba7-af6e-a20de74b1e85)
+
+Name this anything. Just remember the user and password. Uncheck the box that is next to "User must change password at next logon." This wont be necessary. Click next then click Finish.
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/d51330f5-b341-4752-91ab-c628bf23ee17)
+
+Now add this user to the "Domain Admins" security group. Right-click on the user create, then click "Properties." Click on the "Members of" tab, then click "Add." 
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/ac8dbe4c-346a-4799-9d1a-f8cafae0f917)
+
+Type "domain" in the box under "Enter the object names to select:" then click "Check Names" 
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/a0d8e4e1-30df-4ed4-8bde-15e08577f71c)
+
+Choose the "Domain Admins" option then click OK
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/bb26d8e2-d21b-4486-9211-b9374e3ec8c5)
+
+Now, click "Apply." The user has successfully been added to the Domain Admins security group. Click OK. Now logout of the Domain controller and re-log as the user just created.
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/e35b42d0-cc6c-402f-946b-08b49fefaa1e)
+
+<h2>Step 4: Setting Client DNS Settings to Domain Controller Private IP Address</h2>
+
+First, on Azure go to the Client VM. Next, go to the Networking tab and click on the Network Interface.
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/b3b0df1b-dea6-488c-9ed5-b799fea5cb1f)
+
+Next, go to the "DNS Servers tab and create a custom DNS Server. Add a custom server using the Domain Controller's Private IP address. Example Below.
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/a3ea6e36-b4f5-4d53-876d-972bb532a6d8)
+
+Now click "Save" Next go back to the Client and click "Restart in the "Overview" tab 
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/e6b59225-f50e-4d47-b972-d1d5837ec222)
+
+Once the Client is restarted, login to the client with Remote Desktop as the original admin created with the VM.
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/041739ae-3f18-4529-b78a-0c536d63e4ce)
+
+Once logged in go to Settings>System>About and click on "Rename this PC(advanced)"
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/2b814352-f7aa-4f26-9aae-e0920e321f1b)
+
+Now Click on "Change..."
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/0927adfe-69e8-4183-bdd3-48d547948f47)
+
+Now check the bubble next to "Domain" then type in the domain name (Your own domain name)
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/ca0ee0d4-a1ec-4b76-9a5b-1dbbd1d2d634)
+
+There should be window that pops up for a login. Use the admin previously created to login. Example below:
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/42dbb73b-9038-4ef6-a19b-8124bb2822eb)
+
+The VM will now restart after a short period. Now Log into the Domain Controller. Go back to Server Manager>Tools>Active Directory Users and Computers. Under the Domain container, go to the "Computers" tab. It should show that the client has been added to the list.
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/ffaaa5bd-4f80-4f5a-a664-6ac578783ccc)
+
