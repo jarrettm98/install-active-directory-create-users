@@ -16,6 +16,7 @@ https://github.com/jarrettm98/azure-compute-and-networking
 - Active Directory
 
 <h2>Operating Systems Used</h2>
+
 - Windows Server 2022
 - Windows 10
 
