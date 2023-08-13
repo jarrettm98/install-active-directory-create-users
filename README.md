@@ -176,7 +176,50 @@ There should be window that pops up for a login. Use the admin previously create
 
 ![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/42dbb73b-9038-4ef6-a19b-8124bb2822eb)
 
-The VM will now restart after a short period. Now Log into the Domain Controller. Go back to Server Manager>Tools>Active Directory Users and Computers. Under the Domain container, go to the "Computers" tab. It should show that the client has been added to the list.
+The VM will now restart after a short period.
+
+<h2>Step 5: Setting up Remote Connection for Domain Users</h2>
+
+Now, log into the Domain Controller. Go back to Server Manager>Tools>Active Directory Users and Computers. Under the Domain container, go to the "Computers" tab. It should show that the client has been added to the list.
 
 ![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/ffaaa5bd-4f80-4f5a-a664-6ac578783ccc)
 
+Now, log into the Client as the admin user created and go to System Settings>Remote Desktop. Click on "Select users that can remotely access this PC" Next click Add.
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/6e69f3bb-be67-42b2-aea0-47ed4ee39822)
+
+In the box at the bottom, type in "Domain Users" and Check Names. Next click OK.
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/61d6da6a-b8e0-4c45-953f-aad9ae0b582b)
+
+<h2>Step 6: Creating Domain Users</h2>
+
+In the Domain Controller, open "Windows PowerShell ISE." Make sure to open it as Administrator. Click "New File" in the top left corner.
+
+![powershell ise new file](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/e11f1de8-276e-4664-827c-caf7cafec0b1)
+
+Next, copy and paste the script from this link into the text editor. 
+
+https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1
+
+Reccomendation: Before running it, change "NUMBER_OF_ACCOUNTS_TO_CREATE" from 10000 to 100.
+
+Now, click the Run button to run the script. Example below:
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/7cd52fba-92de-44af-933d-87b8aa7e5e0c)
+
+This will start creating domain users with usernames and passwords (The Password for these users will be "Password1") 
+
+Go to Server Manager>Tools>Active Directory Users and Computers. Under the "_EMPLOYEES" tab, look at all of the users created from the script.
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/eec199e2-2e9e-436a-a210-d835cb232f1d)
+
+These names are all randomly generated. Choose one and log into the Client VM with the username it is assigned. (Remember the password is "Password1)
+
+![image](https://github.com/jarrettm98/install-active-directory-create-users/assets/140662793/ef04a5bb-0f60-42e2-ae99-78ef7c229af8)
+
+Congrats! You completed this tutorial!
+
+Click on this link for a tutorial on giving users files shares and permissions.
+
+https://github.com/jarrettm98/network-file-sharing-and-permissions-with-active-directory
