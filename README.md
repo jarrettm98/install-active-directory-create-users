@@ -21,6 +21,7 @@ https://github.com/jarrettm98/azure-compute-and-networking
 - Windows 10
 
 <h2>Prerequisites</h2>
+
 - Create Domain Controller and Client Virtual Machines
 - Enable ICMPv4 rules with Windows Defender
 
